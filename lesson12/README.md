@@ -9,14 +9,13 @@ let template = fs.readFileSync(__dirname + '/forum.ejs','utf-8');
 let posts = [];
 
 const server = http.createServer((req,res)=>{
-  let data = ejs.render(template,{
-    title:'hello ejs',
-    content:'<strong>big hello ejs.</strong>'
-  });
-
-  res.setHeader('Content-Type','text/html');
-  res.statusCode = 200;
-  res.end(data);
+  if(req.method ==='POST' ){
+    //表單提交
+    req.data= "";
+    req.on("readable",function(){
+      //表單數據收集
+    })
+  }
 
  
 });
