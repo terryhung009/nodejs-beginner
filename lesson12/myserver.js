@@ -1,6 +1,3 @@
-## myserver.js
-~~~javascript
-
 const http = require('http');
 const fs = require('fs');
 const ejs = require('ejs');
@@ -9,20 +6,22 @@ let template = fs.readFileSync(__dirname + '/forum.ejs','utf-8');
 let posts = [];
 
 const server = http.createServer((req,res)=>{
-  if(req.method ==='POST' ){
+  if(req.method =='POST' ){
     //表單提交
     req.data= "";
     req.on("readable",function(){
       //表單數據收集
-      let chr = req.read();
-      if (chr)
+      var chr = req.read();
+      if (chr){
         req.data += chr;
+      }
+        
 
 
     });
     req.on("end",function(){
       //表單處理
-      let query = qs.parse(req.parse);
+      var query = qs.parse(req.data);
       posts.push(query.content);
       showForm(posts,res);
 
@@ -45,13 +44,13 @@ server.listen(port,hostname,()=>{
 });
 
 function showForm(p_posts,res){
-  let data = ejs.render(template,{
+  var data = ejs.render(template,{
     title: 'hello ejs!',
     posts: p_posts
 
   });
   res.setHeader('Content-Type','text/html');
-  res.statusCode=200;
+  res.statusCode = 200;
   res.end(data);
 
 
